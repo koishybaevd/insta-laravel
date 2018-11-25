@@ -1,9 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace InstaLaravel\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\User;
+use Illuminate\Support\Facades\Hash;
+use Illuminate\Validation\Rule;
+use InstaLaravel\User;
+use Validator;
+use Session;
 
 class UserController extends Controller
 {
@@ -55,9 +59,9 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(User $user)
     {
-        //
+        return view('users.edit', compact('user'));
     }
 
     /**
@@ -67,9 +71,25 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, User $user)
     {
-        //
+        $validator = Validator::make($request->all(), [
+            'name' => 'required|max:25|exists:users',
+            'email' => [
+                'required',
+                Rule::unique('users')->ignore($user->id),
+            ],
+            'password' => 'required|min:6|max:32|confirmed'
+        ])->validate();            
+        
+        $user->name = request('name');
+        $user->email = request('email');
+        $user->password = Hash::make(request('password'));
+        $user->save();
+        
+        Session::flash('message', 'Profile updated');
+
+        return redirect()->route('profile', ['id' => $user->id]);
     }
 
     /**

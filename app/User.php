@@ -1,6 +1,6 @@
 <?php
 
-namespace App;
+namespace InstaLaravel;
 
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
@@ -30,6 +30,6 @@ class User extends Authenticatable
 
     public function posts()
     {
-        return $this->hasMany('App\Post');
+        return $this->hasMany('InstaLaravel\Post');
     }
 }

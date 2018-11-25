@@ -1,8 +1,8 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace InstaLaravel\Http\Controllers;
 
-use App\Post;
+use InstaLaravel\Post;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Intervention\Image\Facades\Image;
@@ -31,7 +31,9 @@ class PostController extends Controller
      */
     public function index()
     {
+        $posts = Post::limit(12)->get();
 
+        return view('posts.index', compact('posts'));
     }
 
     /**
@@ -82,7 +84,7 @@ class PostController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Post  $post
+     * @param  \InstaLaravel\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function show(Post $post)
@@ -91,21 +93,9 @@ class PostController extends Controller
     }
 
     /**
-     * Return image src.
-     */
-    public function getImage($img_src)
-    {
-        $img = Image::make(storage_path('app/local/images/' . $img_src));
-        return $img->response('jpg');
-        // for public
-        //$url = Storage::url($img_src);
-        //return "<img class='card-img-top' src=" . $url . " alt='Post image'>";
-    }
-
-    /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Post  $post
+     * @param  \InstaLaravel\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function edit(Post $post)
@@ -117,7 +107,7 @@ class PostController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Post  $post
+     * @param  \InstaLaravel\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, Post $post)
@@ -126,16 +116,20 @@ class PostController extends Controller
             'text' => 'required|min:1|max:255',
             'image' => 'required|image'
         ]);
+
+        return redirect('/posts');
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Post  $post
+     * @param  \InstaLaravel\Post  $post
      * @return \Illuminate\Http\Response
      */
     public function destroy(Post $post)
     {
-        //
+        Post::destroy($post->id);
+
+        return redirect('/posts');
     }
 }
