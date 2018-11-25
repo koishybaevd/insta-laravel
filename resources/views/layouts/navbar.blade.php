@@ -1,7 +1,7 @@
 <nav class="navbar navbar-expand-md navbar-light navbar-laravel">
     <div class="container">
         <a class="navbar-brand" href="{{ url('/') }}">
-            {{ config('app.name', 'Insta Laravel') }}
+            {{ config('app.name', 'InstaLaravel') }}
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="{{ __('Toggle navigation') }}">
             <span class="navbar-toggler-icon"></span>
@@ -13,10 +13,16 @@
 
             </ul>
 
+            <!-- Search form -->
+            <form action="{{ route('search') }}" class="form-inline">
+                <input name="query" class="form-control form-control-sm mr-sm-2" type="search" placeholder="Search" aria-label="Search" autocomplete="off" required>
+                <button class="btn btn-sm btn-outline-dark my-2 my-sm-0" type="submit">Search</button>
+            </form>
+
             <!-- Right Side Of Navbar -->
-            <ul class="navbar-nav ml-auto">
+            <ul class="navbar-nav ml-auto">            
                 <!-- Authentication Links -->
-                @guest
+                @guest                    
                     <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">{{ __('Login') }}</a>
                     </li>

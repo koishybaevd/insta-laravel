@@ -10470,5 +10470,11 @@ a.text-dark:focus {
   background-color: #fff;
   -webkit-box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.04);
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
+.jumbotron {
+  background-image: url("https://www.energystorageconsultants.com/wp-content/uploads/rev-extended.jpg");
 }
 

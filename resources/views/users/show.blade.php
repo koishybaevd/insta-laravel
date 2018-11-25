@@ -8,7 +8,12 @@
             <img src="{{ route('getImage', ['img_src' => $user->posts[0]->img_src]) }}" class="img-thumbnail rounded-circle" alt="User Avatar">
         </div>
         <div class="col-6 col-sm-8 col-md-10">
-            <h3>{{ $user->name }}</h3>
+            <h3>
+                {{ $user->name }}
+                @if(Auth::id() === $user->id)
+                <a href="{{ route('users.edit', ['id' => $user->id]) }}" class="btn btn-sm btn-outline-dark">Edit profile</a>
+                @endif
+            </h3>
         </div>
     </div>
 </div>
